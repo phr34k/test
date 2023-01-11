@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Liquid Pos
+Comment=Point of Sale
+Icon=${SNAP}/meta/gui/icon.png
+Exec=liquid-pos %U
+Terminal=false
+Type=Application
+Categories=Office;ContactManagement;
+Keywords=Contacts;
+StartupNotify=false
