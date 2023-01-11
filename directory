@@ -1,0 +1,10 @@
+ls -la
+
+./packages/
+./websocket/
+./liquid_src/
+./terminal_src/
+./selfscan_src/
+
+
+flutter create --template app
