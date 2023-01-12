@@ -75,6 +75,7 @@ parts:
     override-pull: |
       craftctl default
       mkdir -p $CRAFT_PART_INSTALL/opt/
+      rm -rf $CRAFT_PART_INSTALL/opt/packages/*
       cp -rp . $CRAFT_PART_INSTALL/opt/packages
     stage: [opt]
     prime: [-*, -opt/packages]
@@ -89,6 +90,7 @@ parts:
     override-build: |
       craftctl default
       mkdir -p $CRAFT_PART_INSTALL/opt/
+      rm -rf $CRAFT_PART_INSTALL/opt/websocket/*
       cp -rp . $CRAFT_PART_INSTALL/opt/websocket
     stage: [opt]
     prime: [-*, -opt/websocket]
@@ -105,6 +107,7 @@ parts:
       shopt -s extglob
       craftctl default
       mkdir -p liquid_src
+      rm -rf liquid_src/*
       mv !(liquid_src) liquid_src
       mkdir -p .nuget
       mkdir -p .pubcache
@@ -146,6 +149,7 @@ parts:
       shopt -s extglob
       craftctl default
       mkdir -p terminal_src
+      rm -rf terminal_src/*
       mv !(terminal_src) terminal_src
       mkdir -p .nuget
       mkdir -p .pubcache
@@ -186,6 +190,7 @@ parts:
       shopt -s extglob
       craftctl default
       mkdir -p selfscan_src
+      rm -rf selfscan_src/*
       mv !(selfscan_src) selfscan_src
       mkdir -p .nuget
       mkdir -p .pubcache

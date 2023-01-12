@@ -1,0 +1,3 @@
+[submodule "packages/calc"]
+	path = packages/calc
+	url = https://github.com/phr34k/calc
