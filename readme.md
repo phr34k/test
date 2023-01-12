@@ -7,3 +7,7 @@ snapcraft stage source --use-lxd --verbosity debug
 snapcraft stage websocket --use-lxd --verbosity debug
 snapcraft stage packages --use-lxd --verbosity debug
 snapcraft stage liquid terminal --use-lxd --verbosity debug
+
+cd packages/calc/example
+flutter build linux
+snapcraft stage liquid terminal --use-lxd --verbosity debug
