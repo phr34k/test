@@ -74,8 +74,9 @@ parts:
     after: [source]
     override-pull: |
       craftctl default
+    override-build: |
+      craftctl default
       mkdir -p $CRAFT_PART_INSTALL/opt/
-      rm -rf $CRAFT_PART_INSTALL/opt/packages/*
       cp -rp . $CRAFT_PART_INSTALL/opt/packages
     stage: [opt]
     prime: [-*, -opt/packages]
@@ -90,7 +91,6 @@ parts:
     override-build: |
       craftctl default
       mkdir -p $CRAFT_PART_INSTALL/opt/
-      rm -rf $CRAFT_PART_INSTALL/opt/websocket/*
       cp -rp . $CRAFT_PART_INSTALL/opt/websocket
     stage: [opt]
     prime: [-*, -opt/websocket]
@@ -104,10 +104,14 @@ parts:
     # pull source code using snapcraft and then reconstruct the directory structure using
     # previously staged artifacts required for building
     override-pull: |
+      craftctl default
+
+    # copies over the files from ~/part/<part>/source into the current directory, reuse 
+    # nuget and pubcache artifacts (precaching during pull step), and then build flutter
+    override-build: |
       shopt -s extglob
       craftctl default
       mkdir -p liquid_src
-      rm -rf liquid_src/*
       mv !(liquid_src) liquid_src
       mkdir -p .nuget
       mkdir -p .pubcache
@@ -115,18 +119,9 @@ parts:
       export NUGET_PACKAGES="$(pwd)/.nuget"
       rsync --mkpath -avzr $CRAFT_STAGE/opt/websocket/* ./websocket
       rsync --mkpath -avzr $CRAFT_STAGE/opt/packages/* ./packages
-      #craftctl default
       cd liquid_src
-      flutter pub get
       flutter clean
-
-    # copies over the files from ~/part/<part>/source into the current directory, reuse 
-    # nuget and pubcache artifacts (precaching during pull step), and then build flutter
-    override-build: |
-      craftctl default
-      export PUB_CACHE="$(pwd)/.pubcache"
-      export NUGET_PACKAGES="$(pwd)/.nuget"
-      cd liquid_src
+      flutter pub get
       flutter build linux
       rsync --mkpath -avzr build/linux/x64/release/bundle/* $CRAFT_PART_INSTALL/usr/share/liquid
     stage: [usr/share/liquid]
@@ -146,10 +141,14 @@ parts:
     # pull source code using snapcraft and then reconstruct the directory structure using
     # previously staged artifacts required for building
     override-pull: |
+      craftctl default
+
+    # copies over the files from ~/part/<part>/source into the current directory, reuse 
+    # nuget and pubcache artifacts (precaching during pull step), and then build flutter
+    override-build: |
       shopt -s extglob
       craftctl default
       mkdir -p terminal_src
-      rm -rf terminal_src/*
       mv !(terminal_src) terminal_src
       mkdir -p .nuget
       mkdir -p .pubcache
@@ -157,18 +156,9 @@ parts:
       export NUGET_PACKAGES="$(pwd)/.nuget"
       rsync --mkpath -avzr $CRAFT_STAGE/opt/websocket/* ./websocket
       rsync --mkpath -avzr $CRAFT_STAGE/opt/packages/* ./packages
-      #craftctl default
       cd terminal_src
-      flutter pub get
       flutter clean
-
-    # copies over the files from ~/part/<part>/source into the current directory, reuse 
-    # nuget and pubcache artifacts (precaching during pull step), and then build flutter
-    override-build: |
-      craftctl default
-      export PUB_CACHE="$(pwd)/.pubcache"
-      export NUGET_PACKAGES="$(pwd)/.nuget"
-      cd terminal_src
+      flutter pub get
       flutter build linux
       rsync --mkpath -avzr build/linux/x64/release/bundle/* $CRAFT_PART_INSTALL/usr/share/terminal
     stage: [usr/share/terminal]
@@ -187,10 +177,14 @@ parts:
     # pull source code using snapcraft and then reconstruct the directory structure using
     # previously staged artifacts required for building
     override-pull: |
+      craftctl default
+
+    # copies over the files from ~/part/<part>/source into the current directory, reuse 
+    # nuget and pubcache artifacts (precaching during pull step), and then build flutter
+    override-build: |
       shopt -s extglob
       craftctl default
       mkdir -p selfscan_src
-      rm -rf selfscan_src/*
       mv !(selfscan_src) selfscan_src
       mkdir -p .nuget
       mkdir -p .pubcache
@@ -198,18 +192,9 @@ parts:
       export NUGET_PACKAGES="$(pwd)/.nuget"
       rsync --mkpath -avzr $CRAFT_STAGE/opt/websocket/* ./websocket
       rsync --mkpath -avzr $CRAFT_STAGE/opt/packages/* ./packages
-      #craftctl default
       cd selfscan_src
-      flutter pub get
       flutter clean
-
-    # copies over the files from ~/part/<part>/source into the current directory, reuse 
-    # nuget and pubcache artifacts (precaching during pull step), and then build flutter
-    override-build: |
-      craftctl default
-      export PUB_CACHE="$(pwd)/.pubcache"
-      export NUGET_PACKAGES="$(pwd)/.nuget"
-      cd selfscan_src
+      flutter pub get
       flutter build linux
       rsync --mkpath -avzr build/linux/x64/release/bundle/* $CRAFT_PART_INSTALL/usr/share/selfscan
     stage: [usr/share/selfscan]
